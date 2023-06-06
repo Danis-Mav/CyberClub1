@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d4bbeb4300c94e8280a84e995314304b" Name="Diagram1">
+        <EntityTypeShape EntityType="CyberClubModel.Chat" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.Event" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.Message" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.News" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.Role" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.Table" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.Tariff" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.TypeTable" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.User" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CyberClubModel.UserEvent" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="CyberClubModel.FK_Message_Chat" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_UserEvent_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_Message_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_Table_TypeTable" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_Table_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_User_Tariff" ManuallyRouted="false" />
+        <AssociationConnector Association="CyberClubModel.FK_UserEvent_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

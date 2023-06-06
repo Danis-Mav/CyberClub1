@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CyberClubModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Img" Type="varbinary(max)" />
+          <Property Name="MaxUser" Type="int" />
+          <Property Name="DateTimeStart" Type="datetime" />
+          <Property Name="DateTimeEnd" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdChat" Type="int" />
+          <Property Name="IdUser" Type="int" />
+          <Property Name="Text" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Desription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Img" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberTable" Type="int" />
+          <Property Name="IdType" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsBooked" Type="bit" />
+          <Property Name="IdUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tariff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Img" Type="varbinary(max)" />
+          <Property Name="Price" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="TypeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="20" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="Img" Type="varbinary(max)" />
+          <Property Name="Balance" Type="int" />
+          <Property Name="IdTariff" Type="int" />
+        </EntityType>
+        <EntityType Name="UserEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEvent" Type="int" />
+          <Property Name="IdUser" Type="int" />
+        </EntityType>
+        <Association Name="FK_Message_Chat">
+          <End Role="Chat" Type="Self.Chat" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="IdChat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_TypeTable">
+          <End Role="TypeTable" Type="Self.TypeTable" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tariff">
+          <End Role="Tariff" Type="Self.Tariff" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdTariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CyberClubModelContainer">
+          <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tariff" EntityType="Self.Tariff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeTable" EntityType="Self.TypeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserEvent" EntityType="Self.UserEvent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Message_Chat" Association="Self.FK_Message_Chat">
+            <End Role="Chat" EntitySet="Chat" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_TypeTable" Association="Self.FK_Table_TypeTable">
+            <End Role="TypeTable" EntitySet="TypeTable" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_User" Association="Self.FK_Table_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tariff" Association="Self.FK_User_Tariff">
+            <End Role="Tariff" EntitySet="Tariff" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_User" Association="Self.FK_UserEvent_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CyberClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Message" Relationship="Self.FK_Message_Chat" FromRole="Chat" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MaxUser" Type="Int32" />
+          <Property Name="DateTimeStart" Type="DateTime" Precision="3" />
+          <Property Name="DateTimeEnd" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="UserEvent" Relationship="Self.FK_UserEvent_Event" FromRole="Event" ToRole="UserEvent" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdChat" Type="Int32" />
+          <Property Name="IdUser" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK_Message_Chat" FromRole="Message" ToRole="Chat" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Message_User" FromRole="Message" ToRole="User" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Desription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberTable" Type="Int32" />
+          <Property Name="IdType" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsBooked" Type="Boolean" />
+          <Property Name="IdUser" Type="Int32" />
+          <NavigationProperty Name="TypeTable" Relationship="Self.FK_Table_TypeTable" FromRole="Table" ToRole="TypeTable" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Table_User" FromRole="Table" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Tariff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Tariff" FromRole="Tariff" ToRole="User" />
+        </EntityType>
+        <EntityType Name="TypeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Table" Relationship="Self.FK_Table_TypeTable" FromRole="TypeTable" ToRole="Table" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nickname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Balance" Type="Int32" />
+          <Property Name="IdTariff" Type="Int32" />
+          <NavigationProperty Name="Message" Relationship="Self.FK_Message_User" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Table" Relationship="Self.FK_Table_User" FromRole="User" ToRole="Table" />
+          <NavigationProperty Name="Tariff" Relationship="Self.FK_User_Tariff" FromRole="User" ToRole="Tariff" />
+          <NavigationProperty Name="UserEvent" Relationship="Self.FK_UserEvent_User" FromRole="User" ToRole="UserEvent" />
+        </EntityType>
+        <EntityType Name="UserEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEvent" Type="Int32" />
+          <Property Name="IdUser" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_UserEvent_Event" FromRole="UserEvent" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserEvent_User" FromRole="UserEvent" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Message_Chat">
+          <End Role="Chat" Type="Self.Chat" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="IdChat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_TypeTable">
+          <End Role="TypeTable" Type="Self.TypeTable" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tariff">
+          <End Role="Tariff" Type="Self.Tariff" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariff">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdTariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CyberClubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chat" EntityType="Self.Chat" />
+          <EntitySet Name="Event" EntityType="Self.Event" />
+          <EntitySet Name="Message" EntityType="Self.Message" />
+          <EntitySet Name="News" EntityType="Self.News" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Table" EntityType="Self.Table" />
+          <EntitySet Name="Tariff" EntityType="Self.Tariff" />
+          <EntitySet Name="TypeTable" EntityType="Self.TypeTable" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserEvent" EntityType="Self.UserEvent" />
+          <AssociationSet Name="FK_Message_Chat" Association="Self.FK_Message_Chat">
+            <End Role="Chat" EntitySet="Chat" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_TypeTable" Association="Self.FK_Table_TypeTable">
+            <End Role="TypeTable" EntitySet="TypeTable" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_User" Association="Self.FK_Table_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tariff" Association="Self.FK_User_Tariff">
+            <End Role="Tariff" EntitySet="Tariff" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_User" Association="Self.FK_UserEvent_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CyberClubModelContainer" CdmEntityContainer="CyberClubEntities">
+          <EntitySetMapping Name="Chat">
+            <EntityTypeMapping TypeName="CyberClubModel.Chat">
+              <MappingFragment StoreEntitySet="Chat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event">
+            <EntityTypeMapping TypeName="CyberClubModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="MaxUser" ColumnName="MaxUser" />
+                <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+                <ScalarProperty Name="DateTimeEnd" ColumnName="DateTimeEnd" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="CyberClubModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdChat" ColumnName="IdChat" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="CyberClubModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Desription" ColumnName="Desription" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="CyberClubModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table">
+            <EntityTypeMapping TypeName="CyberClubModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NumberTable" ColumnName="NumberTable" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsBooked" ColumnName="IsBooked" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tariff">
+            <EntityTypeMapping TypeName="CyberClubModel.Tariff">
+              <MappingFragment StoreEntitySet="Tariff">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeTable">
+            <EntityTypeMapping TypeName="CyberClubModel.TypeTable">
+              <MappingFragment StoreEntitySet="TypeTable">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="CyberClubModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="IdTariff" ColumnName="IdTariff" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserEvent">
+            <EntityTypeMapping TypeName="CyberClubModel.UserEvent">
+              <MappingFragment StoreEntitySet="UserEvent">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

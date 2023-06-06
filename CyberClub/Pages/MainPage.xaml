@@ -1,0 +1,64 @@
+﻿<Page x:Class="CyberClub.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CyberClub.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="MainPage">
+
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Separator Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="1" Background="Gray" />
+        <Image Source="logo.png"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Right">
+            <TextBlock Text="{Binding User.Nickname}" FontSize="30" Margin="20" VerticalAlignment="Center" Foreground="White" />
+            <Image Source="{Binding User.Img}"  Width="100" Height="100" Margin="0,0,5,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Height="90">
+            <Button x:Name="ProfileButton"  FontSize="30" Height="50" Foreground="White" Background=" Blue" Content="Перейти в профиль" Click="NavigateToProfilePage" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBlock Text="Balance: " FontSize="30"  Foreground="White"/>
+                <TextBlock Text="{Binding User.Balance}" FontSize="30"  Foreground="White"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.RowSpan="2" Margin="0,0,10,0">
+            <StackPanel Grid.RowSpan="2">
+                <Button x:Name="menuButton" FontSize="30" Height="60" Foreground="White" BorderBrush="Aqua" Background="Blue" Content="Меню" Click="ToggleMenu" />
+                <StackPanel x:Name="menuPanel" Visibility="Collapsed">
+                    <Button x:Name="newsButton" FontSize="30" Height="50" Foreground="White" Background=" Blue" Content="Новости" Click="NavigateToNewsPage" />
+                    <Button x:Name="eventsButton" Height="50" FontSize="30" Foreground="White" Background=" Blue" Content="События" Click="NavigateToEventsPage" />
+                    <Button x:Name="bookingButton" Height="50" FontSize="30" Foreground="White" Background=" Blue" Content="Бронирование столов" Click="NavigateToBookingPage" />
+                    <Button x:Name="tariffButton" Height="50" FontSize="30" Foreground="White" Background=" Blue" Content="Выбор тарифа" Click="NavigateToTariffPage" />
+                    <Button x:Name="chatButton" Height="50"  FontSize="30" Foreground="White" Background=" Blue" Content="Общий чат" Click="NavigateToChatPage" />
+                    <Button x:Name="aboutButton" Height="50" FontSize="30" Foreground="White" Background=" Blue" Content="О компьютерном клубе" Click="NavigateToAboutPage" />
+                </StackPanel>
+            </StackPanel>
+           
+        </Grid>
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="#000000">
+            <TextBlock Foreground="White" FontStyle="Italic" FontSize="50" FontFamily="Roboto"  Margin="30,50,30,0" HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+                        TextWrapping="Wrap"
+                    Text="CYBER CLUB"></TextBlock>
+            <TextBlock   Foreground="White" FontStyle="Italic" FontSize="30" FontFamily="Roboto"  Margin="30,50,30,0" HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+                        TextWrapping="Wrap"
+                    Text="CyberClub – это уютный компьютерный клуб, оборудованный всем необходимым для качественной и атмосферной онлайн-игры. К нам в киберклуб приходят ценители активного киберспортивного и виртуального отдыха, а также для того, чтоб найти единомышленников. Благодаря производительным компьютером вы можете поиграть в любую новинку или состязаться с мощным онлайн-противником без подвисания компьютера и «глюков»."/>
+        </StackPanel>
+    </Grid>
+</Page>
